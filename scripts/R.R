@@ -66,9 +66,9 @@ library(pheatmap)
 library(igraph)
 
 ps = readRDS('Datasets/phyloseq_taxonomy.rds') |> 
-  tax_glom('Genus')
+  tax_glom('Genus') |>
+  subset_samples(disease == 'MS')
 
-maaslin2 = read_tsv('Datasets/maaslin2.tsv')
 metacyc = read_tsv('Datasets/metacyc.tsv')
 
 ps_rel = ps |>
@@ -81,47 +81,35 @@ taxa = as.data.frame(tax_table(ps_rel)) |>
            Genus == " g__Frisingicoccus") |>
   rownames()
 
-ps_filt = prune_taxa(indic,ps_rel)
+ps_filt = prune_taxa(taxa,ps_rel)
 otu = data.frame(ps_filt@otu_table)
 
 # edss
 
 meta = data.frame(sample_data(ps_filt)) |>
-  rownames_to_column('sample.id')
-
-match_edss = meta$edss[match(colnames(data.frame(ps_filt@otu_table)), meta$sample.id)]
+  select(edss) |>
+  t()
 
 # pathways
 
-maaslin2 = maaslin2 |>
-  mutate(pathway = feature) |>
-  select(-feature)
-metacyc = metacyc |>
+metacyc_select = metacyc |>
   filter(pathway == 'PWY-6263' |
            pathway == 'PWY-7371' |
            pathway == 'PWY-7374' |
-           pathway == 'PWY66-409')
-pathway = metacyc |>
+           pathway == 'PWY66-409') |>
   column_to_rownames('pathway')
-tpathway = as.data.frame(t(pathway)) |>
-  rownames_to_column('sample.id')
-match_pathway6263 = tpathway[match(colnames(otu), tpathway$sample.id), 'PWY-6263']
-match_pathway7371 = tpathway[match(colnames(otu), tpathway$sample.id), 'PWY-7371']
-match_pathway7374 = tpathway[match(colnames(otu), tpathway$sample.id), 'PWY-7374']
-match_pathway409 = tpathway[match(colnames(otu), tpathway$sample.id), 'PWY66-409']
 
 # merge
 
-summary = rbind(otu, EDSS = match_edss, 
-                   `superpathway of menaquinol-8 biosynthesis II` = match_pathway6263,
-                   `1,4-dihydroxy-6-naphthoate biosynthesis II` = match_pathway7371,
-                   `1,4-dihydroxy-6-naphthoate biosynthesis I` = match_pathway7374,
-                   `superpathway of purine nucleotide salvage` = match_pathway409)
-  t() |>
-  as.data.frame() |>
-  drop_na() |>
-  t() |>
-  as.data.frame()
+summary = rbind(otu, `EDSS` = meta, 
+                metacyc_select)
+rownames(summary) = c('Succinivibrio',
+                      'Frisingicoccus',
+                      'EDSS',
+                      'superpathway of menaquinol-8 biosynthesis II',
+                      '1,4-dihydroxy-6-naphthoate biosynthesis II',
+                      '1,4-dihydroxy-6-naphthoate biosynthesis I',
+                      'superpathway of purine nucleotide salvage')
 
 # corr calculation
 
@@ -140,7 +128,8 @@ corr_mat = pheatmap(otu_cor,
          clustering_method = "complete",
          color = colorRampPalette(c("blue","white","red"))(50),
          breaks = seq(-1, 1, length.out = 51),
-         main = "Spearman's Correlation Heatmap")
+         main = "Spearman's Correlation Heatmap",
+         display_numbers = T)
 
 
 ```
