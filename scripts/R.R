@@ -114,22 +114,16 @@ rownames(summary) = c('Succinivibrio',
 # corr calculation
 
 otu_cor = cor(t(summary), method = 'spearman')
-cor_cutoff = 0.3
-
-wmat = abs(otu_cor)
-diag(wmat) = 0
-wmat[wmat < cor_cutoff] = 0
-g_w = graph_from_adjacency_matrix(wmat, mode = "undirected", weighted = TRUE, diag = FALSE)
-E(g_w)$weight = 1 / pmax(E(g_w)$weight, .Machine$double.eps)
-btw_w = betweenness(g_w, weights = E(g_w)$weight, normalized = TRUE)
-btw_w %>% sort
 
 corr_mat = pheatmap(otu_cor,
          clustering_method = "complete",
-         color = colorRampPalette(c("blue","white","red"))(50),
+         color = colorRampPalette(c("#F2CF7F","white","#AAD9F4"))(50),
          breaks = seq(-1, 1, length.out = 51),
-         main = "Spearman's Correlation Heatmap",
-         display_numbers = T)
+         main = "",
+         display_numbers = T,
+         angle_col = "315",
+         fontsize_col = 7.5,
+         fontsize_row = 8.5)
 
 
 ```
