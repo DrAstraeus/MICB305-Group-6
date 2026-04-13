@@ -63,7 +63,6 @@ peb
 library(tidyverse)
 library(phyloseq)
 library(pheatmap)
-library(igraph)
 
 ps = readRDS('Datasets/phyloseq_taxonomy.rds') |> 
   tax_glom('Genus') |>
