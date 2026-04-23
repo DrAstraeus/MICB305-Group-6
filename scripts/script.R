@@ -12,7 +12,6 @@ library(tidyverse)
 library(phyloseq)
 library(vegan)
 library(ggpubr)
-library(writexl)
 ```
 
 ```{r}
@@ -117,6 +116,12 @@ p_formatted_plot2
 
 ###################### Beta Diversity ######################
 ```{r}
+
+# library
+library(tidyverse)
+library(phyloseq)
+library(vegan)
+
 #Beta Diversity (Weighted Unifrac)
 
 ps_bray = phyloseq::distance(psrare, method = "wunifrac")
@@ -189,6 +194,10 @@ stats2 = bind_rows('Univariate' = stats_univar2 %>% as.data.frame() %>%
 ###################### Indicator Species Analysis ######################
 library(tidyverse)
 library(phyloseq)
+library(indicspecies)
+library(dplyr)
+library(tibble)
+library(ggplot2)
 
 # Load Taxonomy
 taxonomy <- read.delim("taxonomy.tsv", header = T, row.names = 1)
@@ -243,10 +252,6 @@ ps = phyloseq(sample_data(meta_data),
               tree)
 
 ps
-
-#### Indicator Species
-library(phyloseq)
-library(indicspecies)
 
 ### Genus-level plot.
 #ps_genus = tax_glom(ps,'Genus')
@@ -342,7 +347,7 @@ ggplot(df_to_plot, aes(x = vitamin.D..IU., y = Abundance, fill = vitamin.D..IU.)
 
 
 #### Make plot publication ready
-library(ggsignif)
+
 
 # Remove g__
 df_to_plot$Genus <- gsub("g__", "", df_to_plot$Genus)
@@ -404,8 +409,6 @@ ggplot(df_to_plot, aes(x = vitamin.D..IU., y = Abundance, fill = vitamin.D..IU.)
   )
 
 ####Indicator sig taxa plot
-library(dplyr)
-library(tibble)
 
 #Build a clean table
 indval_df <- indval$sign %>%
@@ -432,7 +435,6 @@ indval_df <- indval_df %>%
   )
 
 #Plot IndVal values
-library(ggplot2)
 
 ggplot(indval_df, aes(x = reorder(Genus, stat), y = stat, fill = Group)) +
   geom_col(width = 0.7, color = "black") +
@@ -552,8 +554,6 @@ out = Maaslin2(
 )
 
 statistical_table = out$results
-
-writexl::write_xlsx(statistical_table,'Maaslin2 Results.xlsx')
 
 
 # Filter statistical table
