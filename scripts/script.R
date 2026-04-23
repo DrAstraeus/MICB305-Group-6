@@ -12,8 +12,6 @@ library(tidyverse)
 library(phyloseq)
 library(vegan)
 library(ggpubr)
-library(microbiome)
-library(indicspecies)
 library(writexl)
 ```
 
@@ -231,11 +229,11 @@ meta_names = read.delim("ms_metadata.tsv", row.names = 1) %>% names()
 meta_data = read.delim("ms_metadata.tsv", row.names = 1, skip=2, header = F) 
 names(meta_data) = meta_names
 
-meta_data = meta_data |>
+meta_data = meta_data %>%
   rownames_to_column(var = "sample_id") %>%
   filter(sample_id != "X71802.0091") %>%
   filter(sample_id != "X71402.0259") %>%
-  filter(sample_id != "X76402.0035") |>
+  filter(sample_id != "X76402.0035") %>%
   column_to_rownames(var = "sample_id")
 
 # Phyloseq Object
@@ -470,8 +468,8 @@ library(phyloseq)
 library(ggplot2)
 
 #clean data
-clean_ms_metadata = read.delim('Datasets/ms_metadata.tsv',row.names = 1)|>
-  filter(!is.na(vitamin.D..IU.))|>
+clean_ms_metadata = read.delim('Datasets/ms_metadata.tsv',row.names = 1) %>%
+  filter(!is.na(vitamin.D..IU.)) %>%
   mutate(
     supp_status=factor(if_else (vitamin.D..IU.>0, "supplement", "no supplement"),
   levels = c("no supplement", "supplement")))
@@ -506,7 +504,7 @@ counts_formatted = counts %>% as.matrix()
 # Metadata ~~~~~~~
 View(metadata)
 # Extract just the column names
-meta_names = read.delim('Datasets/clean_ms_metadata.tsv',row.names = 1) |> names()
+meta_names = read.delim('Datasets/clean_ms_metadata.tsv',row.names = 1) %>% names()
 
 meta_data = read.delim('Datasets/clean_ms_metadata.tsv',row.names = 1,skip=2,header = F) 
 table(metadata[2,]== meta_data[1,]) 
@@ -527,10 +525,10 @@ saveRDS(ps,'Datasets/phyloseq_taxonomy.rds')
 
 
 # Load object, filter data in phyloseq object
-ps = readRDS('Datasets/phyloseq_taxonomy.rds')|>
+ps = readRDS('Datasets/phyloseq_taxonomy.rds')%>%
   subset_samples( sample_names(ps) != 'X71802.0091' & 
                    sample_names(ps) != 'X71402.0259' & 
-                   sample_names(ps) != 'X76402.0035')|>
+                   sample_names(ps) != 'X76402.0035')%>%
   subset_samples(disease=="MS")
 
 
@@ -559,10 +557,10 @@ writexl::write_xlsx(statistical_table,'Maaslin2 Results.xlsx')
 
 
 # Filter statistical table
-taxa_to_plot = statistical_table |> 
+taxa_to_plot = statistical_table %>% 
   filter(qval < 0.05)
-taxa_to_plot=taxa_to_plot|>
-  mutate(feature=str_replace(feature,"^X(?=[0-9])", ""))|>
+taxa_to_plot=taxa_to_plot %>%
+  mutate(feature=str_replace(feature,"^X(?=[0-9])", "")) %>%
   mutate(feature=str_replace_all(feature, "\\.", "-"))
 
 
@@ -570,8 +568,8 @@ taxa_to_plot=taxa_to_plot|>
 
 ps_relab = transform_sample_counts(ps_glom, function(x) x / sum(x))
 
-ps_melt = psmelt(ps_relab)|>
-  filter(!is.na(Abundance))|>
+ps_melt = psmelt(ps_relab) %>%
+  filter(!is.na(Abundance)) %>%
   mutate(Genus=str_replace(Genus,"g__", ""))
 head(ps_melt)
 
@@ -581,20 +579,20 @@ pseudocount_value
 ps_melt$Abundance =ps_melt$Abundance + pseudocount_value
 min(ps_melt$Abundance)
 
-avg_abundances = ps_melt |>
-  inner_join(taxa_to_plot, by = c("OTU"="feature"))|>
-  group_by(Genus, supp_status) |>
-  summarize(Abundance = mean(Abundance, na.rm = TRUE)) |> 
+avg_abundances = ps_melt %>%
+  inner_join(taxa_to_plot, by = c("OTU"="feature")) %>%
+  group_by(Genus, supp_status) %>%
+  summarize(Abundance = mean(Abundance, na.rm = TRUE)) %>% 
   ungroup()
 
-ratio = avg_abundances |>
-  pivot_wider(names_from = supp_status, values_from = Abundance) |>
-  mutate(ratio = supplement / `no supplement`) |> 
+ratio = avg_abundances %>%
+  pivot_wider(names_from = supp_status, values_from = Abundance) %>%
+  mutate(ratio = supplement / `no supplement`) %>% 
   mutate(log2fc = log2(ratio))
 
 head(ratio)
 
-ratio_filt = ratio |>
+ratio_filt = ratio %>%
   filter(abs(log2fc)>=1)
 
 ratio_filt
@@ -602,7 +600,7 @@ ratio_filt
 
 
 #plot taxa
-lfc_plot= ratio_filt|>
+lfc_plot= ratio_filt %>%
   ggplot(aes(x=log2fc,y=Genus, fill=log2fc>0)) +
   geom_col(width=0.4)+
   scale_fill_manual(values=c("TRUE"="#80B1D3","FALSE"="#FDB462"),
@@ -626,6 +624,8 @@ ggsave("differential_abundance_plot.png",
        width = 6,             
        height = 2.5,           
        dpi = 300)
+
+                                   
 ###################### Functional Analysis ######################
 
 library(tidyverse)
@@ -635,15 +635,15 @@ library(ggpicrust2)
 set.seed(421)
 
 meta = readRDS('Datasets/phyloseq_taxonomy.rds') %>%
-  .@sam_data |>
-  data.frame() |>
-  rownames_to_column('sample_name') |>
-  filter(sample_name != c('X71802.0091','X71402.0259','X76402.0035')) |>
+  .@sam_data %>%
+  data.frame() %>%
+  rownames_to_column('sample_name') %>%
+  filter(sample_name != c('X71802.0091','X71402.0259','X76402.0035')) %>%
   filter(disease == 'MS')
 
 metacyc = read.delim('Datasets/path_abun_unstrat.tsv')
-metacyc_tidy = metacyc |>
-  select('pathway',all_of(meta$sample_name)) |>
+metacyc_tidy = metacyc %>%
+  select('pathway',all_of(meta$sample_name)) %>%
   column_to_rownames('pathway')
 
 daa_results_df = pathway_daa(abundance = metacyc_tidy,
@@ -677,20 +677,20 @@ library(tidyverse)
 library(phyloseq)
 library(pheatmap)
 
-ps = readRDS('Datasets/phyloseq_taxonomy.rds') |> 
-  tax_glom('Genus') |>
+ps = readRDS('Datasets/phyloseq_taxonomy.rds') %>% 
+  tax_glom('Genus') %>%
   subset_samples(disease == 'MS')
 
 metacyc = read_tsv('Datasets/metacyc.tsv')
 
-ps_rel = ps |>
+ps_rel = ps %>%
   microbiome::transform('compositional')
 
 # taxa
 
-taxa = as.data.frame(tax_table(ps_rel)) |>
+taxa = as.data.frame(tax_table(ps_rel)) %>%
   filter(Genus == " g__Succinivibrio" |
-           Genus == " g__Frisingicoccus") |>
+           Genus == " g__Frisingicoccus") %>%
   rownames()
 
 ps_filt = prune_taxa(taxa,ps_rel)
@@ -698,17 +698,17 @@ otu = data.frame(ps_filt@otu_table)
 
 # edss
 
-meta = data.frame(sample_data(ps_filt)) |>
-  select(edss) |>
+meta = data.frame(sample_data(ps_filt)) %>%
+  select(edss) %>%
   t()
 
 # pathways
 
-metacyc_select = metacyc |>
+metacyc_select = metacyc %>%
   filter(pathway == 'PWY-6263' |
            pathway == 'PWY-7371' |
            pathway == 'PWY-7374' |
-           pathway == 'PWY66-409') |>
+           pathway == 'PWY66-409') %>%
   column_to_rownames('pathway')
 
 # merge
