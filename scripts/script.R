@@ -468,7 +468,7 @@ library(phyloseq)
 library(ggplot2)
 
 #clean data
-clean_ms_metadata = read.delim('Datasets/ms_metadata.tsv',row.names = 1) %>%
+clean_ms_metadata = read.delim('ms_metadata.tsv',row.names = 1) %>%
   filter(!is.na(vitamin.D..IU.)) %>%
   mutate(
     supp_status=factor(if_else (vitamin.D..IU.>0, "supplement", "no supplement"),
@@ -476,17 +476,17 @@ clean_ms_metadata = read.delim('Datasets/ms_metadata.tsv',row.names = 1) %>%
 
 #save into table
 write.table(clean_ms_metadata, 
-            file = "Datasets/clean_ms_metadata.tsv", 
+            file = "clean_ms_metadata.tsv", 
             sep = "\t", 
             row.names = TRUE, 
             quote = FALSE)
 
 # Load datasets
-taxonomy = read.delim('Datasets/taxonomy.tsv', row.names = 1)
-tree = read_tree('Datasets/tree.nwk')
+taxonomy = read.delim('taxonomy.tsv', row.names = 1)
+tree = read_tree('tree.nwk')
 
-counts = read.delim('Datasets/feature-table.txt', skip=1, row.names=1) # First line is not data
-metadata = read.delim('Datasets/clean_ms_metadata.tsv', row.names = 1) # 1st col are names
+counts = read.delim('feature-table.txt', skip=1, row.names=1) # First line is not data
+metadata = read.delim('clean_ms_metadata.tsv', row.names = 1) # 1st col are names
 
 # Wrangle Tables ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Taxonomy
@@ -504,9 +504,9 @@ counts_formatted = counts %>% as.matrix()
 # Metadata ~~~~~~~
 View(metadata)
 # Extract just the column names
-meta_names = read.delim('Datasets/clean_ms_metadata.tsv',row.names = 1) %>% names()
+meta_names = read.delim('clean_ms_metadata.tsv',row.names = 1) %>% names()
 
-meta_data = read.delim('Datasets/clean_ms_metadata.tsv',row.names = 1,skip=2,header = F) 
+meta_data = read.delim('clean_ms_metadata.tsv',row.names = 1,skip=2,header = F) 
 table(metadata[2,]== meta_data[1,]) 
 
 # Set column names for metadata
@@ -519,13 +519,13 @@ ps = phyloseq(sample_data(meta_data),
               tree)
 
 # Save as .rds or .Rdata object
-saveRDS(ps,'Datasets/phyloseq_taxonomy.rds')
+saveRDS(ps,'phyloseq_taxonomy.rds')
 
 
 
 
 # Load object, filter data in phyloseq object
-ps = readRDS('Datasets/phyloseq_taxonomy.rds')%>%
+ps = readRDS('phyloseq_taxonomy.rds')%>%
   subset_samples( sample_names(ps) != 'X71802.0091' & 
                    sample_names(ps) != 'X71402.0259' & 
                    sample_names(ps) != 'X76402.0035')%>%
@@ -634,14 +634,14 @@ library(ggpicrust2)
 
 set.seed(421)
 
-meta = readRDS('Datasets/phyloseq_taxonomy.rds') %>%
+meta = readRDS('phyloseq_taxonomy.rds') %>%
   .@sam_data %>%
   data.frame() %>%
   rownames_to_column('sample_name') %>%
   filter(sample_name != c('X71802.0091','X71402.0259','X76402.0035')) %>%
   filter(disease == 'MS')
 
-metacyc = read.delim('Datasets/path_abun_unstrat.tsv')
+metacyc = read.delim('path_abun_unstrat.tsv')
 metacyc_tidy = metacyc %>%
   select('pathway',all_of(meta$sample_name)) %>%
   column_to_rownames('pathway')
@@ -677,11 +677,11 @@ library(tidyverse)
 library(phyloseq)
 library(pheatmap)
 
-ps = readRDS('Datasets/phyloseq_taxonomy.rds') %>% 
+ps = readRDS('phyloseq_taxonomy.rds') %>% 
   tax_glom('Genus') %>%
   subset_samples(disease == 'MS')
 
-metacyc = read_tsv('Datasets/metacyc.tsv')
+metacyc = read_tsv('metacyc.tsv')
 
 ps_rel = ps %>%
   microbiome::transform('compositional')
