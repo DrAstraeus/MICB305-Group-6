@@ -1,20 +1,28 @@
 ---
-title: "Association of Vitamin D Intake with Gut Microbiome Composition, Predicted Functional Potential and Disease Severity in Multiple Sclerosis Patients"
+title: "Vitamin D supplementation is correlated with gut microbial diversity, abundance of specific taxa, and predicted functional potential of metabolic pathways in patients with multiple sclerosis"
 output: html_document
 ---
 
 ```{r}
 
-###################### Alpha Diversity ######################
+############################################ TABLE OF CONTENTS ############################################
+# 1. Alpha Diversity                                                                                      #
+# 2. Beta Diversity                                                                                       #
+# 3. Indicator Taxa Analysis                                                                              #
+# 4. Differential Abundance Analysis                                                                      #
+# 5. Functional Analysis                                                                                  #
+# 6. Correlation Matrix                                                                                   #
+# 7. Supplemental Figures                                                                                 #
+###########################################################################################################
+
+###################### 1. Alpha Diversity ######################
 
 ```{r}
 library(tidyverse)
 library(phyloseq)
 library(vegan)
 library(ggpubr)
-```
 
-```{r}
 metadata = read.delim("ms_metadata.tsv", row.names = 1, check.names = FALSE)
 df = metadata %>% 
   rownames_to_column(var = "sample_id")
@@ -31,9 +39,7 @@ taxonomy = read.delim("taxonomy.tsv", row.names = 1)
 counts = read.delim("feature-table.txt", skip=1, row.names=1)
 
 tree = read_tree("tree.nwk")
-```
 
-```{r}
 taxonomy_formatted = taxonomy %>% 
   separate(col = Taxon, 
            into = c("Domain","Phylum","Class","Order",
@@ -51,9 +57,7 @@ filtered_metadata = filtered_metadata %>%
 ps <- phyloseq(sample_data(filtered_metadata), otu_table(counts_formatted, taxa_are_rows = T), tax_table(taxonomy_formatted), tree)
 
 saveRDS(ps, "./phyloseq_taxonomy.rds")
-```
 
-```{r}
 #Alpha Diversity Shannon
 hist(sample_sums(ps)) 
 rarecurve(t(data.frame(ps@otu_table)), step= 1000, label = FALSE)
@@ -87,34 +91,7 @@ p_formatted_plot = pdata %>%
 p_formatted_plot
 ```
 
-```{r}
-set.seed(421)
-table(sample_sums(psrare))
-
-p2 = plot_richness(psrare, x = "vitaminD_status", 
-                  measures = c("Observed","Shannon","Chao1","Simpson"),
-                  color = 'vitaminD_status')
-p2
-
-
-
-pdata2 = p2$data
-
-p_formatted_plot2 = pdata2 %>%
-  ggplot(aes(vitaminD_status,value, fill = vitaminD_status)) +
-  geom_boxplot(outlier.shape = NA) + 
-  geom_jitter(height=0, width=0.2, alpha = 0.2) +
-  theme_classic(base_size=10) +
-  facet_wrap(~variable,ncol=4,scales = 'free_y')+
-  theme(axis.text.x = element_text(angle = 45,vjust=1, hjust=1, size = 12), text = element_text(size = 15)) +
-  stat_compare_means(comparisons = comparisons, method="wilcox.test", label = "p.signif", size = 6) +
-  labs(x = "Vitamin D Supplemented", y = "Alpha Diversity") +
-  scale_y_continuous(expand = expansion(mult = c(0,0.1))) +
-  scale_fill_manual(name = "Vitamin D Status", values = c("Supplement" = "#ABDAF4", "No Supplement" = "#F3CF80")) 
-p_formatted_plot2
-```
-
-###################### Beta Diversity ######################
+###################### 2. Beta Diversity ######################
 ```{r}
 
 # library
@@ -153,10 +130,7 @@ stats_univar
 
 stats = bind_rows('Univariate' = stats_univar %>% as.data.frame() %>% rownames_to_column('Variable'), .id = 'Model') 
 stats
-```
 
-
-```{r}
 #Beta Diversity (Bray Curtis)
 
 ps_bray2 = phyloseq::distance(psrare, method = "bray")
@@ -191,7 +165,8 @@ stats2 = bind_rows('Univariate' = stats_univar2 %>% as.data.frame() %>%
                   .id = 'Model')
 ```
 
-###################### Indicator Species Analysis ######################
+###################### 3. Indicator Taxa Analysis ######################
+```{r}
 library(tidyverse)
 library(phyloseq)
 library(indicspecies)
@@ -458,8 +433,9 @@ ggplot(indval_df, aes(x = reorder(Genus, stat), y = stat, fill = Group)) +
     axis.title = element_text(face = "bold"),
     legend.position = "right"
   )
-
-###################### Differential Abundance Analysis ######################
+```
+###################### 4. Differential Abundance Analysis ######################
+```{r}
 #Load library
  # if(!requireNamespace("BiocManager", quietly = TRUE))
  #     install.packages("BiocManager")
@@ -624,10 +600,11 @@ ggsave("differential_abundance_plot.png",
        width = 6,             
        height = 2.5,           
        dpi = 300)
-
+```
                                    
-###################### Functional Analysis ######################
-
+###################### 5. Functional Analysis ######################
+```{r}
+                                   
 library(tidyverse)
 library(phyloseq)
 library(ggpicrust2)
@@ -664,15 +641,17 @@ peb = pathway_errorbar_fixed(abundance = metacyc_tidy,
                                                'No Supplement')), 
                      wrap_label = T, wraplength=65,
                      fc_cutoff = 0.5, order_by_log = F,
-                     p_values_threshold = 5e-4, 
+                     p_values_threshold = 0.05, 
                      order = "name", 
                      ko_to_kegg = FALSE, 
                      p_value_bar = TRUE, 
                      x_lab = "description")
 peb
 
-###################### Correlation Matrix ######################
+```                                   
+###################### 6. Correlation Matrix ######################
 
+```{r}
 library(tidyverse)
 library(phyloseq)
 library(pheatmap)
@@ -737,5 +716,403 @@ corr_mat = pheatmap(otu_cor,
          fontsize_col = 7.5,
          fontsize_row = 8.5)
 
+```
+                                   
+###################### 7. Supplemental Figures ######################
 
+####### Alpha Diversity #######
+```{r}
+
+library(tidyverse)
+library(phyloseq)
+library(vegan)
+library(ggpubr)
+
+metadata = read.delim("ms_metadata.tsv", row.names = 1, check.names = FALSE)
+df = metadata %>% 
+  rownames_to_column(var = "sample_id")
+filtered_df = df %>%
+  filter(sample_id != "X71802.0091") %>%
+  filter(sample_id != "X71402.0259") %>%
+  filter(sample_id != "X76402.0035") %>%
+  filter(disease == "MS")
+filtered_metadata = filtered_df %>%
+  column_to_rownames(var = "sample_id")
+
+taxonomy = read.delim("taxonomy.tsv", row.names = 1)
+
+counts = read.delim("feature-table.txt", skip=1, row.names=1)
+
+tree = read_tree("tree.nwk")
+
+taxonomy_formatted = taxonomy %>% 
+  separate(col = Taxon, 
+           into = c("Domain","Phylum","Class","Order",
+                    "Family","Genus","Species"),
+           sep=";", fill="right") %>% 
+  select(-Confidence) %>% 
+  as.matrix()
+
+counts_formatted = counts %>% 
+  as.matrix()
+filtered_metadata = filtered_metadata %>%
+  filter(!is.na(`vitamin D (IU)`)) %>%
+  mutate(`vitaminD_status` = ifelse(`vitamin D (IU)` > 0, "Supplement", "No Supplement"))
+
+ps <- phyloseq(sample_data(filtered_metadata), otu_table(counts_formatted, taxa_are_rows = T), tax_table(taxonomy_formatted), tree)
+
+saveRDS(ps, "./phyloseq_taxonomy.rds")
+
+hist(sample_sums(ps)) 
+rarecurve(t(data.frame(ps@otu_table)), step= 1000, label = FALSE)
+
+set.seed(421)
+psrare = ps %>% rarefy_even_depth(sample.size = 10378, rngseed = 421)
+table(sample_sums(psrare))
+
+p2 = plot_richness(psrare, x = "vitaminD_status", 
+                  measures = c("Observed","Shannon","Chao1","Simpson"),
+                  color = 'vitaminD_status')
+p2
+
+
+
+pdata2 = p2$data
+
+p_formatted_plot2 = pdata2 %>%
+  ggplot(aes(vitaminD_status,value, fill = vitaminD_status)) +
+  geom_boxplot(outlier.shape = NA) + 
+  geom_jitter(height=0, width=0.2, alpha = 0.2) +
+  theme_classic(base_size=10) +
+  facet_wrap(~variable,ncol=4,scales = 'free_y')+
+  theme(axis.text.x = element_text(angle = 45,vjust=1, hjust=1, size = 12), text = element_text(size = 15)) +
+  stat_compare_means(comparisons = comparisons, method="wilcox.test", label = "p.signif", size = 6) +
+  labs(x = "Vitamin D Supplemented", y = "Alpha Diversity") +
+  scale_y_continuous(expand = expansion(mult = c(0,0.1))) +
+  scale_fill_manual(name = "Vitamin D Status", values = c("Supplement" = "#ABDAF4", "No Supplement" = "#F3CF80")) 
+p_formatted_plot2
+```
+
+####### Differential Abundance ####### 
+```{r}
+library(Maaslin2)
+library(tidyverse)
+library(phyloseq)
+library(ggplot2)
+
+#clean data
+clean_ms_metadata = read.delim('Datasets/ms_metadata.tsv',row.names = 1)%>%
+  filter(!is.na(vitamin.D..IU.))%>%
+  mutate(
+    supp_status=factor(if_else (vitamin.D..IU.>0, "supplement", "no supplement"),
+  levels = c("no supplement", "supplement")))
+
+#save into table
+write.table(clean_ms_metadata, 
+            file = "Datasets/clean_ms_metadata.tsv", 
+            sep = "\t", 
+            row.names = TRUE, 
+            quote = FALSE)
+
+# Load datasets
+taxonomy = read.delim('Datasets/taxonomy.tsv', row.names = 1)
+tree = read_tree('Datasets/tree.nwk')
+
+counts = read.delim('Datasets/feature-table.txt', skip=1, row.names=1) # First line is not data
+metadata = read.delim('Datasets/clean_ms_metadata.tsv', row.names = 1) # 1st col are names
+
+# Wrangle Tables ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Taxonomy
+taxonomy_formatted = taxonomy %>% 
+  separate(col = Taxon, 
+           into = c('Domain','Phylum','Class','Order',
+                    'Family','Genus','Species'),
+           sep=';', fill='right') %>% 
+  select(-Confidence) %>% 
+  as.matrix()
+
+# Counts
+counts_formatted = counts %>% as.matrix()
+
+# Metadata ~~~~~~~
+View(metadata)
+# Extract just the column names
+meta_names = read.delim('Datasets/clean_ms_metadata.tsv',row.names = 1) %>% names()
+
+meta_data = read.delim('Datasets/clean_ms_metadata.tsv',row.names = 1,skip=2,header = F) 
+table(metadata[2,]== meta_data[1,]) 
+
+# Set column names for metadata
+names(meta_data) = meta_names
+
+# Create the phyloseq object
+ps = phyloseq(sample_data(meta_data),
+              otu_table(counts_formatted, taxa_are_rows = T),
+              tax_table(taxonomy_formatted),
+              tree)
+
+# Save as .rds or .Rdata object
+saveRDS(ps,'Datasets/phyloseq_taxonomy.rds')
+
+
+
+
+# Load object, filter data in phyloseq object
+ps = readRDS('Datasets/phyloseq_taxonomy.rds')%>%
+  subset_samples( sample_names(ps) != 'X71802.0091' & 
+                   sample_names(ps) != 'X71402.0259' & 
+                   sample_names(ps) != 'X76402.0035')%>%
+  subset_samples(disease=="MS")
+
+
+ps_glom = tax_glom(ps, 'Genus')
+
+# Differential abundance with MaAsLin2
+
+set.seed(421)
+out = Maaslin2(
+  input_data = data.frame(ps_glom@otu_table), 
+  input_metadata = data.frame(ps_glom@sam_data), 
+  output = 'to_delete', 
+  fixed_effects = c('supp_status'),
+  normalization = 'TSS',
+  transform = 'AST',
+  min_abundance = 0.001, 
+  min_prevalence = 0.1,
+  max_significance = 0.05,
+  plot_heatmap = FALSE,
+  plot_scatter = FALSE
+)
+
+statistical_table = out$results
+
+writexl::write_xlsx(statistical_table,'Maaslin2 Results.xlsx')
+
+
+# Filter statistical table
+taxa_to_plot = statistical_table %>% 
+  filter(qval < 0.05)
+taxa_to_plot=taxa_to_plot%>%
+  mutate(feature=str_replace(feature,"^X(?=[0-9])", ""))%>%
+  mutate(feature=str_replace_all(feature, "\\.", "-"))
+
+
+#calculate log 2 fold change
+
+ps_relab = transform_sample_counts(ps_glom, function(x) x / sum(x))
+
+ps_melt = psmelt(ps_relab)%>%
+  filter(!is.na(Abundance))%>%
+  mutate(Genus=str_replace(Genus,"g__", ""))
+head(ps_melt)
+
+pseudocount_value = min(ps_melt$Abundance[ps_melt$Abundance > 0], na.rm=TRUE) / 2
+pseudocount_value
+
+ps_melt$Abundance =ps_melt$Abundance + pseudocount_value
+min(ps_melt$Abundance)
+
+avg_abundances = ps_melt %>%
+  inner_join(taxa_to_plot, by = c("OTU"="feature"))%>%
+  group_by(Genus, supp_status) %>%
+  summarize(Abundance = mean(Abundance, na.rm = TRUE)) %>% 
+  ungroup()
+
+ratio = avg_abundances %>%
+  pivot_wider(names_from = supp_status, values_from = Abundance) %>%
+  mutate(ratio = supplement / `no supplement`) %>% 
+  mutate(log2fc = log2(ratio))
+
+head(ratio)
+
+ratio_filt = ratio %>%
+  filter(abs(log2fc)>=1)
+
+ratio_filt
+
+                                   
+lfc_plot= ratio%>%
+  ggplot(aes(reorder(Genus, -log2fc), log2fc, fill=log2fc>0)) +
+  geom_col(width=0.8, linewidth = 0.2, color="black", show.legend=FALSE)+
+  scale_fill_manual(values=c("TRUE"="#AAD9F4","FALSE"="#F2CF7F"),
+                    labels=c("TRUE"="Enriched with supplementation","FALSE"= "Depleted with supplementation"),
+                    name="Abundance Trend")+
+  theme(
+  axis.text.y = element_text(size = 6),
+  axis.title.y = element_text(size=8),
+  axis.title.x = element_text(size=6),
+  axis.text.x = element_text(size = 6),
+  legend.title = element_text(size = 8),
+  legend.text = element_text(size = 6))+
+     coord_flip() +
+  labs(y= "Log2 Fold Change Abundance",
+    x= "Genera")
+
+lfc_plot                                   
+```
+####### Functional Analysis ####### 
+
+```{r}
+                                   
+library(tidyverse)
+library(phyloseq)
+library(ggpicrust2)
+
+set.seed(421)
+
+meta = readRDS('phyloseq_taxonomy.rds') %>%
+  .@sam_data %>%
+  data.frame() %>%
+  rownames_to_column('sample_name') %>%
+  filter(sample_name != c('X71802.0091','X71402.0259','X76402.0035')) %>%
+  filter(disease == 'MS')
+
+metacyc = read.delim('path_abun_unstrat.tsv')
+metacyc_tidy = metacyc %>%
+  select('pathway',all_of(meta$sample_name)) %>%
+  column_to_rownames('pathway')
+
+daa_results_df = pathway_daa(abundance = metacyc_tidy,
+                             metadata = meta, 
+                             group = "vitaminD_cat", 
+                             daa_method = "Maaslin2", 
+                             select = NULL, reference = NULL)
+
+ daa_annotated_results_df = pathway_annotation(pathway = "MetaCyc",
+                                               daa_results_df = daa_results_df)
+
+source('ggpicrust2_errorbar_function_fixed.R')
+
+peb = pathway_errorbar_fixed(abundance = metacyc_tidy, 
+                     daa_results_df = daa_annotated_filt, 
+                     Group = factor(meta$vitaminD_cat,
+                                    levels = c('Supplement',
+                                               'No Supplement')), 
+                     wrap_label = T, wraplength=65,
+                     fc_cutoff = 0, order_by_log = F,
+                     p_values_threshold = 0.05, 
+                     order = "name", 
+                     ko_to_kegg = FALSE, 
+                     p_value_bar = TRUE, 
+                     x_lab = "description")
+peb
+
+```                
+
+####### Correlation Matrix ####### 
+```{r}
+library(tidyverse)
+library(phyloseq)
+library(pheatmap)
+library(igraph)
+
+ps = readRDS('Datasets/phyloseq_taxonomy.rds') %>% 
+  tax_glom('Genus') %>%
+  subset_samples(disease == 'MS')
+
+metacyc = read_tsv('Datasets/metacyc.tsv')
+
+ps_rel = ps %>%
+  microbiome::transform('compositional')
+
+# taxa
+
+taxa = as.data.frame(tax_table(ps_rel)) %>%
+  filter(Genus == " g__Succinivibrio" |
+           Genus == " g__Frisingicoccus" |
+           Genus == " g__Erysipelatoclostridium" |
+           Genus == " g__Desulfovibrio") %>%
+  rownames()
+
+ps_filt = prune_taxa(taxa,ps_rel)
+otu = data.frame(ps_filt@otu_table)
+
+# edss
+
+meta = data.frame(sample_data(ps_filt)) %>%
+  select(edss, vitamin.D..IU.) %>%
+  t()
+
+# pathways
+
+metacyc_select = metacyc %>%
+  filter(pathway == 'PWY-6263' |
+           pathway == 'PWY-7371' |
+           pathway == 'PWY-7374' |
+           pathway == 'PWY66-409') %>%
+  column_to_rownames('pathway')
+
+# merge
+
+summary = rbind(otu, 
+                meta, 
+              metacyc_select)
+rownames(summary) = c('Desulfovibrio',
+                      'Succinivibrio',
+                      'Erysipelatoclostridium',
+                      'Frisingicoccus',
+                      'EDSS',
+                      'Vitamin D (IU)',
+                      'superpathway of menaquinol-8 biosynthesis II',
+                      '1,4-dihydroxy-6-naphthoate biosynthesis II',
+                      '1,4-dihydroxy-6-naphthoate biosynthesis I',
+                      'superpathway of purine nucleotide salvage')
+  
+
+# corr calculation
+
+otu_cor = cor(t(summary), method = 'spearman')
+
+corr_mat = pheatmap(otu_cor,
+         clustering_method = "complete",
+         color = colorRampPalette(c("#F2CF7F","white","#AAD9F4"))(50),
+         breaks = seq(-1, 1, length.out = 51),
+         main = "",
+         display_numbers = T,
+         angle_col = "315",
+         fontsize_col = 7.5,
+         fontsize_row = 8.5)                                 
+```
+####### Vitamin D Intake, Zhou et al. ####### 
+```{r}
+library(tidyverse)
+library(ggsignif)
+graph = metadata %>%
+  select(disease,`vitamin D (IU)`) %>%
+  filter(!is.na(`vitamin D (IU)`))
+sum(graph$disease == "MS")
+sum(graph$disease == "Control")
+
+MSvitD_summ = graph %>%
+  ggplot(aes(x=disease,y=`vitamin D (IU)`, fill = disease)) +
+   geom_violin() +
+   geom_boxplot(
+    outlier.shape = NA,
+    width = 0.4,
+    alpha = 0.5,
+    color = "black") +
+  geom_jitter(
+    height = 0,
+    width = 0.1,
+    alpha = 0.4,
+    size = 1.5) +
+  scale_x_discrete(
+    labels = c(
+      "Control" = "HHC",
+      "MS" = "MS")) +
+  scale_fill_manual(
+    values = c(
+      "Control" = "#E69F00",
+      "MS" = "#56B4E9"),
+    labels = c(
+      "Control" = "HHC",
+      "MS" = "MS"),
+    name = "Disease") +
+  geom_signif(
+    comparisons = list(c("Control", "MS")),
+    annotation = "***",
+    vjust = 0.5) +
+  labs(x = NULL, y = 'Vitamin D (IU)') +
+theme_bw()
+MSvitD_summ                                   
 ```
