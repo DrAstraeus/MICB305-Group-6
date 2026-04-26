@@ -35,5 +35,9 @@ Please view the shell and R scripts generated in our study in the `/scripts` dir
   - Spearman's Correlation Heatmap Analysis
 ## Results
 Please view the main and supplemental figures generated in our study in the `/figures` directory.
+- Vitamin D supplementation is associated with decreased microbiome complexity and evenness.
+- Vitamin D supplementation has minimal influence on the gut microbiota shift observed in MS patients.
+- Selective microbial shifts associated with vitamin D show limited links to MS severity.
+- The predicted functional potential of vitamin K2 biosynthesis and purine nucleotide salvage is reduced in MS patients on vitamin D supplementation.
 ## Acknowledgements
 We would like to express our deepest gratitude to Claire Sie, our graduate teaching assistant, for guiding our research process, troubleshooting issues with our code, and supporting us at every step of our project. We would also like to thank Brian Shao for providing comments on language and clarity for our project proposal and manuscript. Finally, we thank the instructor for MICB 305: Data Science in Microbiology and Immunology Research, Dr. Avril Metcalfe-Roach, who designed the course modules to help us implement useful data science tools for microbiome research. 
