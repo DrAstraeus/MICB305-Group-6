@@ -17,7 +17,7 @@ Metadata and 16S rRNA amplicon sequencing datasets of MS patients and household 
 | `edss` | Quantified neurological disability in multiple sclerosis patients; uses a twenty-point scale from 0.0 (normal) to 10.0 (death due to MS), with half-point increments |
 | `disease` | Patient group (categorical variable); MS, Control |
 ## Methods
-Please view the shell and R scripts generated in our study in the `/scripts` directory. All input files can be found in the `/datasets` directory.
+Please view the [shell](https://github.com/DrAstraeus/MICB305-Group-6/blob/main/scripts/shell.sh) and [R scripts](https://github.com/DrAstraeus/MICB305-Group-6/blob/main/scripts/script.R) generated in our study in the `/scripts` directory. All [input files](https://github.com/DrAstraeus/MICB305-Group-6/tree/main/datasets) can be found in the `/datasets` directory.
 - QIIME 2 (Amplicon-2025.4)
   - Manifest Importing
   - DADA2 Denoising
@@ -36,8 +36,17 @@ Please view the shell and R scripts generated in our study in the `/scripts` dir
 ## Results
 Please view the main and supplemental figures generated in our study in the `/figures` directory.
 - Vitamin D supplementation is associated with decreased microbiome complexity and evenness.
+  - [Fig. 1](https://github.com/DrAstraeus/MICB305-Group-6/blob/main/figures/Fig1.jpeg)
 - Vitamin D supplementation has minimal influence on the gut microbiota shift observed in MS patients.
+  - [Fig. 2A](https://github.com/DrAstraeus/MICB305-Group-6/blob/main/figures/Fig2A.png)
+  - [Fig. 2B](https://github.com/DrAstraeus/MICB305-Group-6/blob/main/figures/Fig2B.png)
 - Selective microbial shifts associated with vitamin D show limited links to MS severity.
+  - [Fig. 3A](https://github.com/DrAstraeus/MICB305-Group-6/blob/main/figures/Fig3A.png)
+  - [Fig. 3B](https://github.com/DrAstraeus/MICB305-Group-6/blob/main/figures/Fig3B.png)
+  - [Fig. 3C](https://github.com/DrAstraeus/MICB305-Group-6/blob/main/figures/Fig3C.png)
 - The predicted functional potential of vitamin K2 biosynthesis and purine nucleotide salvage is reduced in MS patients on vitamin D supplementation.
+  - [Fig. 4A](https://github.com/DrAstraeus/MICB305-Group-6/blob/main/figures/Fig4A.png)
+  - [Fig. 4B](https://github.com/DrAstraeus/MICB305-Group-6/blob/main/figures/Fig4B.png)
+  - [Fig. 4C](https://github.com/DrAstraeus/MICB305-Group-6/blob/main/figures/Fig4C.png)
 ## Acknowledgements
 We would like to express our deepest gratitude to [Claire Sie](https://github.com/claire0s), our graduate teaching assistant, for guiding our research process, troubleshooting issues with our code, and supporting us at every step of our project. We would also like to thank [Brian Shao](https://github.com/bjzsh) for providing comments on language and clarity for our project proposal and manuscript. Finally, we thank the instructor for MICB 305: Data Science in Microbiology and Immunology Research, [Dr. Avril Metcalfe-Roach](https://github.com/armetcal), who designed the course modules to help us implement useful data science tools for microbiome research. 
