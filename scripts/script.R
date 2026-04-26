@@ -15,7 +15,7 @@ output: html_document
 # 7. Supplemental Figures                                                                                 #
 ###########################################################################################################
 
-###################### 1. Alpha Diversity ######################
+################################################################## 1. Alpha Diversity ##################################################################
 
 ```{r}
 library(tidyverse)
@@ -91,7 +91,7 @@ p_formatted_plot = pdata %>%
 p_formatted_plot
 ```
 
-###################### 2. Beta Diversity ######################
+################################################################## 2. Beta Diversity ##################################################################
 ```{r}
 
 # library
@@ -165,7 +165,7 @@ stats2 = bind_rows('Univariate' = stats_univar2 %>% as.data.frame() %>%
                   .id = 'Model')
 ```
 
-###################### 3. Indicator Taxa Analysis ######################
+################################################################## 3. Indicator Taxa Analysis ##################################################################
 ```{r}
 library(tidyverse)
 library(phyloseq)
@@ -434,7 +434,7 @@ ggplot(indval_df, aes(x = reorder(Genus, stat), y = stat, fill = Group)) +
     legend.position = "right"
   )
 ```
-###################### 4. Differential Abundance Analysis ######################
+################################################################## 4. Differential Abundance Analysis ##################################################################
 ```{r}
 #Load library
  # if(!requireNamespace("BiocManager", quietly = TRUE))
@@ -602,7 +602,7 @@ ggsave("differential_abundance_plot.png",
        dpi = 300)
 ```
                                    
-###################### 5. Functional Analysis ######################
+################################################################## 5. Functional Analysis ##################################################################
 ```{r}
                                    
 library(tidyverse)
@@ -655,7 +655,7 @@ peb = pathway_errorbar_fixed(abundance = metacyc_tidy,
 peb
 
 ```                                   
-###################### 6. Correlation Matrix ######################
+################################################################## 6. Correlation Matrix ##################################################################
 
 ```{r}
 library(tidyverse)
@@ -724,7 +724,7 @@ corr_mat = pheatmap(otu_cor,
 
 ```
                                    
-###################### 7. Supplemental Figures ######################
+################################################################## 7. Supplemental Figures ##################################################################
 
 ####### Alpha Diversity #######
 ```{r}
