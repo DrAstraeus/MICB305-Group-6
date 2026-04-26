@@ -5,7 +5,7 @@ Vivian Fung, Nelson Kung, Benjamin Lee, Ethan Sun, Ivory Zhang
 Dept. of Microbiology and Immunology, University of British Columbia, Vancouver, Canada
 
 ## Overview
-Multiple Sclerosis (MS) is a chronic central nervous system disorder that frequently results in neurological disability, largely due to an inflammation that damages the myelin sheath. Associations between vitamin D intake and expanded disability status scale (EDSS), a metric quantifying MS disease progression, are inconsistent across clinical trials, suggesting that vitamin D’s impact on the progression of MS is currently not well known. we aim to clarify the association between vitamin D and MS by exploring if and how the gut microbiome may contribute to the relationship between oral vitamin D intake and EDSS.
+Multiple Sclerosis (MS) is a chronic central nervous system disorder that frequently results in neurological disability, largely due to an inflammation that damages the myelin sheath. Associations between vitamin D intake and expanded disability status scale (EDSS), a metric quantifying MS disease progression, are inconsistent across clinical trials, suggesting that vitamin D’s impact on the progression of MS is currently not well known. We aim to clarify the association between vitamin D and MS by exploring if and how the gut microbiome may contribute to the relationship between oral vitamin D intake and EDSS.
 ## Research Question
 *Is Vitamin D intake associated with changes in microbiome composition and/or function in multiple sclerosis patients?*
 ## Dataset
