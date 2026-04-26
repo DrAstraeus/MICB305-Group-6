@@ -629,6 +629,12 @@ daa_results_df = pathway_daa(abundance = metacyc_tidy,
                              daa_method = "Maaslin2", 
                              select = NULL, reference = NULL)
 
+source('ggpicrust2_calculate_log2fc.R')                                
+lfc_fixed = fix_lfc(abundance = metacyc_tidy,
+                             metadata = meta, 
+                             group = "vitaminD_cat",
+                             reference = 'No Supplement')
+                                   
  daa_annotated_results_df = pathway_annotation(pathway = "MetaCyc",
                                                daa_results_df = daa_results_df)
 
