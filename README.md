@@ -50,3 +50,75 @@ Please view the main and supplemental [figures](https://github.com/DrAstraeus/MI
   - [Fig. 4C](https://github.com/DrAstraeus/MICB305-Group-6/blob/main/figures/Fig4C.png)
 ## Acknowledgements
 We would like to express our deepest gratitude to [Claire Sie](https://github.com/claire0s), our graduate teaching assistant, for guiding our research process, troubleshooting issues with our code, and supporting us at every step of our project. We would also like to thank [Brian Shao](https://github.com/bjzsh) for providing comments on language and clarity for our project proposal and manuscript. Finally, we thank the instructor for MICB 305: Data Science in Microbiology and Immunology Research, [Dr. Avril Metcalfe-Roach](https://github.com/armetcal), who designed the course modules to help us implement useful data science tools for microbiome research. 
+## Directory Tree
+```.
+├── 📁 README.md
+├── 📁 datasets
+│    ├── 📁 R
+│    │    ├── 💾 feature-table.txt
+│    │    ├── 💾 ms_metadata.tsv
+│    │    ├── 💾 path_abun_unstrat.tsv
+│    │    ├── 💾 taxonomy.tsv
+│    │    └── 💾 tree.nwk
+│    └── 📁 shell
+│         ├── 💾 MS_alpha-rarefaction.qzv
+│         ├── 💾 MS_rep-seqs.qzv
+│         ├── 💾 MS_stats.qzv
+│         ├── 💾 MS_table.qzv
+│         ├── 💾 MS_taxa-bar-plots.qzv
+│         └── 💾 demux.qzv
+├── 📁 figures
+│    ├── 📊 Fig1.png
+│    ├── 📊 Fig2A.png
+│    ├── 📊 Fig2B.png
+│    ├── 📊 Fig3A.png
+│    ├── 📊 Fig3B.png
+│    ├── 📊 Fig3C.png
+│    ├── 📊 Fig4A.png
+│    ├── 📊 Fig4B.png
+│    ├── 📊 Fig4C.png
+│    ├── 📊 FigS1.png
+│    ├── 📊 FigS2.png
+│    ├── 📊 FigS3.png
+│    ├── 📊 FigS4.png
+│    └── 📊 FigS5.png
+├── 📁 meetings
+│    ├── 📝 MICB 305 Meeting 2 Notes.pdf
+│    ├── 📝 MICB 305 Meeting Agenda Week 11.pdf
+│    ├── 📝 MICB 305 Meeting Agenda Week 3.pdf
+│    ├── 📝 MICB 305 Meeting Agenda Week 4.pdf
+│    ├── 📝 MICB 305 Meeting Agenda Week 5.pdf
+│    ├── 📝 MICB 305 Meeting Agenda Week 6.pdf
+│    ├── 📝 MICB 305 Meeting Agenda Week 8.pdf
+│    ├── 📝 MICB 305 Meeting Notes Feb 9.pdf
+│    ├── 📝 MICB 305 Meeting Notes Mar 9.pdf
+│    ├── 📝 Mar 23 micb 305 notes.pdf
+│    ├── 📝 Meeting 7 Notes.pdf
+│    ├── 📝 Meeting Agenda Week 10.pdf
+│    ├── 📝 [01.12] Meeting Minutes.pdf
+│    ├── 📝 [01.19] Meeting Agenda.pdf
+│    ├── 📝 [01.26] Meeting Minutes.pdf
+│    ├── 📝 [02.02] Meeting Minutes.pdf
+│    ├── 📝 [02.23] Meeting Minutes.pdf
+│    ├── 📝 [03.02] Meeting Agenda.pdf
+│    ├── 📝 [03.16] Meeting Minutes.pdf
+│    ├── 📝 [3.09] Meeting Minute.pdf
+│    └── 📝 [3.30] Meeting Minutes.pdf
+└── 📁 scripts
+     ├── 💾 ggpicrust2_calculate_log2fc.R
+     ├── 💾 ggpicrust2_errorbar_function_fixed.R
+     ├── 📁 individual_analyses
+     │    ├── 💾 BL_CorrMat.R
+     │    ├── 💾 BL_PICRUSt2.R
+     │    ├── 💾 ES_Alpha_Diversity.R
+     │    ├── 💾 ES_Beta_Diversity.R
+     │    ├── 💾 IZ_NK_IndicTaxa.R
+     │    └── 💾 VF_DiffAbun.R
+     ├── 💾 script.R
+     ├── 💾 shell.sh
+     └── 📁 supplemental_analyses
+          ├── 💾 BL_CorrMat_S.R
+          ├── 💾 BL_PICRUSt2_S.R
+          ├── 💾 BL_VitD_S.R
+          ├── 💾 ES_Alpha_Diversity_S.R
+          └── 💾 VF_DiffAbun_S.R
