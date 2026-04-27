@@ -9,7 +9,7 @@ Multiple Sclerosis (MS) is a chronic central nervous system disorder that freque
 ## Research Question
 *Is Vitamin D intake associated with changes in microbiome composition and/or function in multiple sclerosis patients?*
 ## Dataset
-Metadata and 16S rRNA amplicon sequencing datasets of MS patients and household healthy controls were derived from [Zhou et al](https://pmc.ncbi.nlm.nih.gov/articles/PMC10143502/). A diet analysis was conducted to measure nutrient intake, including oral vitamin D supplementation (quantified using international units), by participant questionnaire. In total, the study included 1,152 participants, comprising 576 MS patients and 576 healthy controls, and concluded that there were distinct microbial networks between the two groups.
+Metadata and 16S rRNA amplicon sequencing datasets of MS patients and household healthy controls were derived from [Zhou et al. (2023)](https://pmc.ncbi.nlm.nih.gov/articles/PMC10143502/). A diet analysis was conducted to measure nutrient intake, including oral vitamin D supplementation (quantified using international units), by participant questionnaire. In total, the study included 1,152 participants, comprising 576 MS patients and 576 healthy controls, and concluded that there were distinct microbial networks between the two groups.
 ### Key Variables of Interest
 | Variable | Definition |
 | ----------------- | ----------- |
