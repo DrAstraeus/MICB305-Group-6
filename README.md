@@ -51,7 +51,8 @@ Please view the main and supplemental [figures](https://github.com/DrAstraeus/MI
 ## Acknowledgements
 We would like to express our deepest gratitude to [Claire Sie](https://github.com/claire0s), our graduate teaching assistant, for guiding our research process, troubleshooting issues with our code, and supporting us at every step of our project. We would also like to thank [Brian Shao](https://github.com/bjzsh) for providing comments on language and clarity for our project proposal and manuscript. Finally, we thank the instructor for MICB 305: Data Science in Microbiology and Immunology Research, [Dr. Avril Metcalfe-Roach](https://github.com/armetcal), who designed the course modules to help us implement useful data science tools for microbiome research. 
 ## Directory Tree
-```.
+```
+.
 ├── 📁 README.md
 ├── 📁 datasets
 │    ├── 📁 R
