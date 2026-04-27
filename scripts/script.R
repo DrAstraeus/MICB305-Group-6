@@ -5,15 +5,15 @@ output: html_document
 
 ```{r}
 
-############################################ TABLE OF CONTENTS ############################################
-# 1. Alpha Diversity                                                                                      #
-# 2. Beta Diversity                                                                                       #
-# 3. Indicator Taxa Analysis                                                                              #
-# 4. Differential Abundance Analysis                                                                      #
-# 5. Functional Analysis                                                                                  #
-# 6. Correlation Matrix                                                                                   #
-# 7. Supplemental Figures                                                                                 #
-###########################################################################################################
+########## TABLE OF CONTENTS ##########
+# 1. Alpha Diversity                  #
+# 2. Beta Diversity                   #
+# 3. Indicator Taxa Analysis          #
+# 4. Differential Abundance Analysis  #
+# 5. Functional Analysis              #
+# 6. Correlation Matrix               #
+# 7. Supplemental Figures             #
+#######################################
 ```
 ################################################################## 1. Alpha Diversity ##################################################################
 
@@ -726,6 +726,8 @@ corr_mat = pheatmap(otu_cor,
                                    
 ################################################################## 7. Supplemental Figures ##################################################################
 
+
+                                   
 ####### Alpha Diversity #######
 ```{r}
 
