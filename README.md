@@ -1,4 +1,4 @@
-# MICB 305: Data Science in Microbiology and Immunology Research
+# MICB 305: Data Science in Microbiology and Immunology Research (2025W2)
 ### Vitamin D supplementation is correlated with gut microbial diversity, abundance of specific taxa, and predicted functional potential of metabolic pathways in patients with multiple sclerosis
 Vivian Fung, Nelson Kung, Benjamin Lee, Ethan Sun, Ivory Zhang
 
