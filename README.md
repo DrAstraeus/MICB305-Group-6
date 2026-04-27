@@ -27,12 +27,12 @@ Please view the [shell](https://github.com/DrAstraeus/MICB305-Group-6/blob/main/
   - Pathway Abundance
 - RStudio (2026.01.0, Build 392)
   - Data Wrangling, Visualization
-  - Alpha Diversity Analysis
-  - Beta Diversity Analysis
-  - Indicator Taxa Analysis
-  - Differential Abundance Analysis
-  - PICRUSt2 Functional Analysis
-  - Spearman's Correlation Heatmap Analysis
+  - [Alpha Diversity Analysis](https://github.com/DrAstraeus/MICB305-Group-6/blob/main/scripts/individual_analyses/ES_Alpha_Diversity.R)
+  - [Beta Diversity Analysis](https://github.com/DrAstraeus/MICB305-Group-6/blob/main/scripts/individual_analyses/ES_Beta_Diversity.R)
+  - [Indicator Taxa Analysis](https://github.com/DrAstraeus/MICB305-Group-6/blob/main/scripts/individual_analyses/IZ_NK_IndicTaxa.R)
+  - [Differential Abundance Analysis](https://github.com/DrAstraeus/MICB305-Group-6/blob/main/scripts/individual_analyses/VF_DiffAbun.R)
+  - [PICRUSt2 Functional Analysis](https://github.com/DrAstraeus/MICB305-Group-6/blob/main/scripts/individual_analyses/BL_PICRUSt2.R)
+  - [Spearman's Correlation Heatmap Analysis](https://github.com/DrAstraeus/MICB305-Group-6/blob/main/scripts/individual_analyses/BL_CorrMat.R)
 ## Results
 Please view the main and supplemental [figures](https://github.com/DrAstraeus/MICB305-Group-6/tree/main/figures) generated in our study in the `/figures` directory.
 - Vitamin D supplementation is associated with decreased microbiome complexity and evenness.
