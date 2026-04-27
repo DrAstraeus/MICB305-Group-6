@@ -15,7 +15,7 @@ Metadata and 16S rRNA amplicon sequencing datasets of MS patients and household 
 | ----------------- | ----------- |
 | `vitamin D (IU)`, `vitamin.D..IU` | Quantified Vitamin D intake measured in IU (international units) |
 | `edss` | Quantified neurological disability in multiple sclerosis patients; uses a twenty-point scale from 0.0 (normal) to 10.0 (death due to MS), with half-point increments |
-| `disease` | Patient group (categorical variable); MS, Control |
+| `disease` | Patient group; MS, Control (Healthy Household Control) |
 ## Methods
 Please view the [shell](https://github.com/DrAstraeus/MICB305-Group-6/blob/main/scripts/shell.sh) and [R scripts](https://github.com/DrAstraeus/MICB305-Group-6/blob/main/scripts/script.R) generated in our study in the `/scripts` directory. All [input files](https://github.com/DrAstraeus/MICB305-Group-6/tree/main/datasets) can be found in the `/datasets` directory.
 - QIIME 2 (Amplicon-2025.4)
