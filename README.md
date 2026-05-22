@@ -36,7 +36,7 @@ Please view the [shell](https://github.com/DrAstraeus/MICB305-Group-6/blob/main/
 ## Results
 Please view the main and supplemental [figures](https://github.com/DrAstraeus/MICB305-Group-6/tree/main/figures) generated in our study in the `/figures` directory.
 - Vitamin D supplementation is associated with decreased microbiome complexity and evenness.
-  - [Fig. 1](https://github.com/DrAstraeus/MICB305-Group-6/blob/main/figures/Fig1.jpeg)
+  - [Fig. 1](https://github.com/DrAstraeus/MICB305-Group-6/blob/main/figures/Fig1.png)
 - Vitamin D supplementation has minimal influence on the gut microbiota shift observed in MS patients.
   - [Fig. 2A](https://github.com/DrAstraeus/MICB305-Group-6/blob/main/figures/Fig2A.png)
   - [Fig. 2B](https://github.com/DrAstraeus/MICB305-Group-6/blob/main/figures/Fig2B.png)
